@@ -43,6 +43,14 @@ def main():
         xs, ys = load_data(Path(DATA_FILE))
         theta0, theta1 = load_thetas(Path(THETAS_FILE))
 
+        # Calculate R² score
+        preds = [estimate_price(x, theta0, theta1) for x in xs]
+        m = len(xs)
+        y_mean = sum(ys) / m
+        ss_tot = sum((y - y_mean) ** 2 for y in ys)
+        ss_res = sum((y - p) ** 2 for y, p in zip(ys, preds))
+        r2 = 1.0 - (ss_res / ss_tot if ss_tot != 0 else 0.0)
+
         x_min, x_max = min(xs), max(xs)
 
         line_x = [x_min + (x_max - x_min) * i / 1000 for i in range(1001)]
@@ -50,10 +58,10 @@ def main():
 
         plt.figure()
         plt.scatter(xs, ys, label="Data")
-        plt.plot(line_x, line_y, label="Regression line")
+        plt.plot(line_x, line_y, label=f"Regression line (R²={r2:.4f})")
         plt.xlabel("Mileage (km)")
         plt.ylabel("Price")
-        plt.title("ft_linear_regression")
+        plt.title("Car Price Prediction by Mileage")
         plt.legend()
 
         plt.show()

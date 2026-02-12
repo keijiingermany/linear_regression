@@ -29,6 +29,8 @@ def main():
         sys.exit(1)
 
     price = estimate_price(mileage, theta0, theta1)
+    if price < 0:
+        price = 0.0
     print(f"Estimated price: {price}")
 
 

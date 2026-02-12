@@ -5,8 +5,8 @@ from pathlib import Path
 
 DATA_FILE = "data.csv"
 THETAS_FILE = "thetas.json"
-LEARNING_RATE = 0.1
-ITERATIONS = 2000
+LEARNING_RATE = 0.2
+ITERATIONS = 2500
 
 
 def load_data(path: Path):
